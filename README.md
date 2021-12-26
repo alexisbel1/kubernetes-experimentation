@@ -3,5 +3,5 @@
 ## Start cluster
  
 ```
-k3d cluster start mycluster
+k3d cluster start mycluster2
 ```

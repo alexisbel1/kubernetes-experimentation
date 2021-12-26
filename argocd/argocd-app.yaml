@@ -17,31 +17,6 @@ spec:
     targetRevision: HEAD
     path: argocd/app/
 
-    directory:
-      recurse: true
-      jsonnet:
-        # A list of Jsonnet External Variables
-        extVars:
-        - name: foo
-          value: bar
-          # You can use "code to determine if the value is either string (false, the default) or Jsonnet code (if code is true).
-        - code: true
-          name: baz
-          value: "true"
-        # A list of Jsonnet Top-level Arguments
-        tlas:
-        - code: false
-          name: foo
-          value: bar
-
-    # plugin specific config
-    plugin:
-      name: mypluginname
-      # environment variables passed to the plugin
-      env:
-        - name: FOO
-          value: bar
-
   # Destination cluster and namespace to deploy the application
   destination:
     server: https://kubernetes.default.svc

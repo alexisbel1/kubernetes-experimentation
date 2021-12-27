@@ -10,6 +10,13 @@ helm test kubevela -n vela-system
 curl -fsSl https://kubevela.io/script/install.sh | bash
 ```
 
+## Start dashboard
+
+```
+vela addon enable velaux
+vela port-forward -n vela-system addon-velaux 9082:80
+```
+
 ## Deploy firt app
 
 ```

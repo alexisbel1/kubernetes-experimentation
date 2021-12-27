@@ -1,7 +1,7 @@
 apiVersion: core.oam.dev/v1beta1
 kind: Application
 metadata:
-  name: first-vela-app-2
+  name: vela-app-from-argocd
   # annotations:
   #   argocd.argoproj.io/tracking-id: kubevela-test-app
 spec:
@@ -17,4 +17,4 @@ spec:
             class: "traefik"
             domain: localhost
             http:
-              "/": 8000
+              "/app-argocd": 8000

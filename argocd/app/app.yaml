@@ -5,6 +5,11 @@ metadata:
   # annotations:
   #   argocd.argoproj.io/tracking-id: kubevela-test-app
 spec:
+  policies:
+    - name: apply-once
+      type: apply-once
+      properties:
+        enable: true
   components:
     - name: express-server
       type: webservice

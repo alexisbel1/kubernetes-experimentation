@@ -1,11 +1,20 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: argocd
+namespace: observability
 
 resources:
-- https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-- namespace.yaml
+- agent.yaml
+- node-exporter.yaml
+- github.com/kubernetes/kube-state-metrics?ref=v2.3.0
 # - ingress.yaml
+
+configMapGenerator:
+- name: grafana-agent
+  files:
+  - agent-config.yaml
+  
+generatorOptions:
+  disableNameSuffixHash: true
 
 # patches:
 #   - patch: |-

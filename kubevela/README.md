@@ -5,7 +5,7 @@
 ```
 helm repo add kubevela https://charts.kubevela.net/core
 helm repo update
-helm upgrade --create-namespace -n vela-system --install kubevela kubevela/vela-core --version 1.2.0-rc.1 --set multicluster.enabled=true --wait
+helm upgrade --create-namespace -n vela-system --install kubevela kubevela/vela-core --version 1.2.0-rc.2 --set multicluster.enabled=true --wait
 helm test kubevela -n vela-system
 curl -fsSl https://kubevela.io/script/install.sh | bash
 ```

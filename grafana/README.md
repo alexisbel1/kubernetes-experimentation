@@ -15,4 +15,10 @@ sudo sh -c 'curl -LJ -o cortextool https://github.com/grafana/cortex-tools/relea
 source .env
 cortextool analyse grafana --address=$GRAFANA_URL --key=$GRAFANA_API_KEY
 cortextool analyse prometheus --address=$PROMETHEUS_QUERY_ENDPOINT --id=$PROMETHEUS_ID --key=$PROMETHEUS_API_KEY --log.level=debug
+
+jq '.metricsUsed' metrics-in-grafana.json \
+| tr -d '", ' \
+| sed '1d;$d' \
+| grep -v 'grafanacloud*' \
+| paste -s -d '|' -
 ```

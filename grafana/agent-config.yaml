@@ -14,6 +14,10 @@ prometheus:
       basic_auth:
         username: 290314
         password_file: /secrets/api-key
+      # write_relabel_configs:
+      # - source_labels: [__name__]
+      #   regex: instance:node_cpu_utilisation:rate1m|instance:node_load1_per_cpu:ratio|instance:node_memory_utilisation:ratio|instance:node_network_receive_bytes_excluding_lo:rate1m|instance:node_network_receive_drop_excluding_lo:rate1m|instance:node_network_transmit_bytes_excluding_lo:rate1m|instance:node_network_transmit_drop_excluding_lo:rate1m|instance:node_vmstat_pgmajfault:rate1m|instance_device:node_disk_io_time_seconds:rate1m|instance_device:node_disk_io_time_weighted_seconds:rate1m|node_cpu_seconds_total|node_disk_io_time_seconds_total|node_disk_read_bytes_total|node_disk_written_bytes_total|node_filesystem_avail_bytes|node_filesystem_size_bytes|node_load1|node_load15|node_load5|node_memory_Buffers_bytes|node_memory_Cached_bytes|node_memory_MemAvailable_bytes|node_memory_MemFree_bytes|node_memory_MemTotal_bytes|node_network_receive_bytes_total|node_network_transmit_bytes_total|node_uname_info|up
+      #   action: keep
     scrape_configs:
     - job_name: integrations/kubernetes/cadvisor
       bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token

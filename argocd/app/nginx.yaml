@@ -1,20 +1,89 @@
-apiVersion: core.oam.dev/v1beta1
-kind: Application
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: vela-nginx
-  # annotations:
-  #   argocd.argoproj.io/tracking-id: kubevela-test-app
+  name: nginx
 spec:
-  components:
-    - name: nginx
-      type: webservice
-      properties:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 1 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
         image: nginx:alpine
-        port: 80
-      traits:
-        - type: ingress-1-20
-          properties:
-            class: "traefik"
-            domain: localhost
-            http:
-              "/nginx": 80
+        ports:
+        - containerPort: 80
+        resources:
+          limits: 
+            cpu: 100m
+            memory: 100Mi
+          requests: {}
+        volumeMounts:
+          - name: nginx
+            mountPath: /etc/nginx/nginx.conf
+            subPath: nginx.conf
+      volumes:
+        - name: nginx
+          configMap:
+            name: nginx
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+spec:
+  selector:
+    app: nginx
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: nginx
+  annotations:
+spec:
+  # ingressClassName: traefik
+  rules:
+  - http:
+      paths:
+      - path: /nginx
+        pathType: Prefix
+        backend:
+          service:
+            name: nginx
+            port:
+              number: 80
+
+# apiVersion: core.oam.dev/v1beta1
+# kind: Application
+# metadata:
+#   name: vela-nginx
+#   # annotations:
+#   #   argocd.argoproj.io/tracking-id: kubevela-test-app
+# spec:
+#   components:
+#     - name: nginx
+#       type: webservice
+#       properties:
+#         image: nginx:alpine
+#         port: 80
+#         volumeMounts:
+#           configMap:
+#               - name: nginx
+#                 mountPath: /etc/nginx
+#                 cmName: nginx
+
+#       traits:
+#         - type: ingress-1-20
+#           properties:
+#             class: "traefik"
+#             domain: localhost
+#             http:
+#               "/nginx": 80
